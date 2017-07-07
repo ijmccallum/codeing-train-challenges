@@ -6,7 +6,7 @@ var sponge = [];
 var gap = 0;
 var cutoff = 10;
 var lastTime = 0;
-
+initFractalization = 3;
 // function preload(){
 //   img = loadImage("texture.jpg");
 // }
@@ -15,6 +15,9 @@ function setup() {
     createCanvas(canvasWidth, canvasHeight, WEBGL);
     perspective();
     sponge = [new SpongeBox(0,0,0,100)];
+    for (var i = 0; i < initFractalization; i++){
+        runFractalization();
+    }
 }
 
 function draw() {
@@ -35,6 +38,10 @@ function draw() {
 
 //on click- fractalize!
 function mousePressed() {
+    runFractalization();
+}
+
+var runFractalization = function(){
     if (lastTime > cutoff) {
         if (!confirm('the last time this took ' + Math.ceil(lastTime) + ' ms... this one might break your computer...  ')){
             return;

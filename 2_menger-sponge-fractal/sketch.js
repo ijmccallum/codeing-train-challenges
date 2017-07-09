@@ -6,7 +6,7 @@ var sponge = [];
 var gap = 0;
 var cutoff = 10;
 var lastTime = 0;
-initFractalization = 3;
+var initFractalization = 3;
 // function preload(){
 //   img = loadImage("texture.jpg");
 // }

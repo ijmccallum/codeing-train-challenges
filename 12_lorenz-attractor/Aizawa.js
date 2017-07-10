@@ -32,9 +32,7 @@ var Aizawa = (function(){
 
 
 		var dx = (z-b)*x - d*y;
-
 		var dy = d * x + (z - b) * y;
-
 		var dz = c + a*z - ((z * z * z)/3 ) - ((x * x) + (y * y)) * (1 + e * z) + f * z * (x * x * x); 
 
 
@@ -44,10 +42,6 @@ var Aizawa = (function(){
 
 
 
-        // if (x < 0.0001 && x > -0.0001) { x = 0.1; }
-        // if (y < 0.0001 && y > -0.0001) { y = 0.1; }
-        console.log(x, y, z);
-
         return {
             x:x, y:y, z:z
         }
@@ -55,7 +49,7 @@ var Aizawa = (function(){
 
     return {
         nextPoint: nextPoint,
-        zoom: 300,
+        zoom: 200,
         dt: 0.01
     }
 })()

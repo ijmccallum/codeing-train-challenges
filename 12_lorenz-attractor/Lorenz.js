@@ -25,6 +25,7 @@ var Lorenz = (function(){
     return {
         nextPoint: nextPoint,
         zoom: 5,
-        dt: 0.01
+        dt: 0.01,
+        max_length: 2000
     }
 })()

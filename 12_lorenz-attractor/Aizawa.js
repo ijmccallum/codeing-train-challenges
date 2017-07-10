@@ -50,6 +50,7 @@ var Aizawa = (function(){
     return {
         nextPoint: nextPoint,
         zoom: 200,
-        dt: 0.01
+        dt: 0.01,
+        max_length: 2000
     }
 })()

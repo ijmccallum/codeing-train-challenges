@@ -1,13 +1,14 @@
 
 //pick a random attractor!
 //var attractor = Lorenz;
-var attractor = Aizawa;
+//var attractor = Aizawa;
+var attractor = Halvorsen;
 
 //each attractor sets it's own defaults
 var zoom = attractor.zoom;
 var dt = attractor.dt;
+var max_length = attractor.max_length;
 
-var max_length = 2000;
 var points = [];
 
 //orbit

@@ -19,16 +19,17 @@ function setup() {
     width = document.documentElement.clientWidth;
     height = document.documentElement.clientHeight;
     createCanvas(width, height, WEBGL);
-    translate(width/2, height/2);
+    translate(width/2, height/2, 100);
+}
+
+function mousePressed() {
+    //document.body.className = "mousedown";
 }
 
 function mouseDragged(e){
-    // movementX / movementY are increments from the last drag event
-    console.log("mouse dragging", e.movementX, e.movementY, this);
+    //orbit!
     orbitY += e.movementX / (width / 2);
     orbitX += e.movementY / (height / 2);
-    // this.rotateY((this.mouseX - this.width / 2) / (this.width / 2));
-    // this.rotateX((this.mouseY - this.height / 2) / (this.width / 2));
 }
 
 function draw() {
@@ -49,17 +50,22 @@ function draw() {
     points.push({x: (x * zoom), y: (y * zoom), z: (z * zoom)});
 
     //plot it!
-    points.forEach(function(point){
+    points.forEach(function(point, i){
         stroke(255);
         translate(point.x, point.y, point.z);
         sphere(1);
         translate(-point.x, -point.y, -point.z);
+        if (i + 1 < points.length) {
+            mx = (points[i + 1].x - point.x) / 10;
+            my = (points[i + 1].y - point.y) / 10;
+            mz = (points[i + 1].z - point.z) / 10;
+            point.x += mx;
+            point.y += my;
+            point.z += mz;
+        }
+        
+
+        //fun bit - make each point move a bit towards the next point
     });
 }
 
-function Dot(){
-
-    this.draw = function(){
-    }
-
-}

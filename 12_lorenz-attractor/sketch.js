@@ -1,14 +1,13 @@
-var zoom = 10;
 
-var x = 0.5;
-var y = 0.5;
-var z = 0.5;
+//pick a random attractor!
+//var attractor = Lorenz;
+var attractor = Aizawa;
 
-//constants
-var rho = 28;
-var sigma = 10;
-var beta = 8 / 3;
+//each attractor sets it's own defaults
+var zoom = attractor.zoom;
+var dt = attractor.dt;
 
+var max_length = 2000;
 var points = [];
 
 //orbit
@@ -22,10 +21,6 @@ function setup() {
     translate(width/2, height/2, 100);
 }
 
-function mousePressed() {
-    //document.body.className = "mousedown";
-}
-
 function mouseDragged(e){
     //orbit!
     orbitY += e.movementX / (width / 2);
@@ -34,20 +29,17 @@ function mouseDragged(e){
 
 function draw() {
     background(30);
-    var dt = 0.01;
     rotateY(orbitY);
     rotateX(orbitX);
 
-    var dx = (sigma * (y - x)) * dt;
-    x += dx;
+    var nextPoint = attractor.nextPoint(dt);
 
-    var dy = (x * (rho - z) - y) * dt;
-    y += dy;
-
-    var dz = (x * y - beta * z) * dt;
-    z += dz;
-
-    points.push({x: (x * zoom), y: (y * zoom), z: (z * zoom)});
+    points.push({x: (nextPoint.x * zoom), y: (nextPoint.y * zoom), z: (nextPoint.z * zoom)});
+  
+    if (points.length > max_length) {
+        //remove the first one
+        points.shift();
+    }
 
     //plot it!
     points.forEach(function(point, i){
@@ -63,8 +55,6 @@ function draw() {
             point.y += my;
             point.z += mz;
         }
-        
-
         //fun bit - make each point move a bit towards the next point
     });
 }

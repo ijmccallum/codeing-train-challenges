@@ -1,34 +1,4 @@
-var Test = (function(){
-    var x, y, z;
-    var dt = 0.01;
 
-    var reset = function(){
-        x = -3;
-        y = 0;
-        z = 0;
-    }
-
-    var nextPoint = function(){
-
-        x += 0.01;
-
-        //limit!
-        if (x > 3) {
-            return false;
-        }
-
-        return {
-            x:x, y:y, z:z
-        }
-    }
-
-    return {
-        nextPoint: nextPoint,
-        zoom: 200,
-        max_length: 1000,
-        reset: reset
-    }
-})()
 
 //pick a random attractor!
 //var attractor = Lorenz;
@@ -36,7 +6,6 @@ var Test = (function(){
 //var attractor = Halvorsen;
 //var attractor = Sakarya;
 var attractor = GenesioTesi;
-//var attractor = Test;
 
 //each attractor sets it's own defaults
 var zoom = attractor.zoom;

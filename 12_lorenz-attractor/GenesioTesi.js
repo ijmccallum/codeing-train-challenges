@@ -1,27 +1,29 @@
-var Aizawa = (function(){
-    var a = 0.95, b = 0.7, c = 0.6, d = 3.5, e = 0.25, f = 0.1;
-    var zoom = 200;
-    var dt = 0.01;
-    var max_length = 2000;
+var GenesioTesi = (function(){
+    var a = 0.44;
+    var b = 1.1;
+    var c = 1;
+    var zoom = 300;
+    var dt = 0.05;
+    var max_length = 3000;
 
     var x, y, z;
     var reset = function(){
-        x = 0.1;
+        x = -0.99;
         y = 0;
         z = 0;
     }
 
-    var nextPoint = function(){
+    var nextPoint = function(points){
 
-		var dx = (z-b)*x - d*y;
-		var dy = d * x + (z - b) * y;
-		var dz = c + a*z - ((z * z * z)/3 ) - ((x * x) + (y * y)) * (1 + e * z) + f * z * (x * x * x); 
+		var dx = y;
+		var dy = z;
+        var dz = - a * z - b * y - x * (1+x);
 
         x += (dx * dt);
         y += (dy * dt);
         z += (dz * dt);
 
-        //reset!
+
         if (!isFinite(x * zoom) || !isFinite(y * zoom) || !isFinite(z * zoom)) {
             return false;
         }

@@ -1,15 +1,49 @@
+var Test = (function(){
+    var x, y, z;
+    var dt = 0.01;
+
+    var reset = function(){
+        x = -3;
+        y = 0;
+        z = 0;
+    }
+
+    var nextPoint = function(){
+
+        x += 0.01;
+
+        //limit!
+        if (x > 3) {
+            return false;
+        }
+
+        return {
+            x:x, y:y, z:z
+        }
+    }
+
+    return {
+        nextPoint: nextPoint,
+        zoom: 200,
+        max_length: 1000,
+        reset: reset
+    }
+})()
 
 //pick a random attractor!
 //var attractor = Lorenz;
 //var attractor = Aizawa;
-var attractor = Halvorsen;
+//var attractor = Halvorsen;
+//var attractor = Sakarya;
+var attractor = GenesioTesi;
+//var attractor = Test;
 
 //each attractor sets it's own defaults
 var zoom = attractor.zoom;
-var dt = attractor.dt;
 var max_length = attractor.max_length;
 
 var points = [];
+var expire = false;
 
 //orbit
 var orbitX = 0;
@@ -33,30 +67,55 @@ function draw() {
     rotateY(orbitY);
     rotateX(orbitX);
 
-    var nextPoint = attractor.nextPoint(dt);
+    //Getting the point
+    if (!expire) {
+        //get the next point
+        var nextPoint = attractor.nextPoint();
 
-    points.push({x: (nextPoint.x * zoom), y: (nextPoint.y * zoom), z: (nextPoint.z * zoom)});
-  
-    if (points.length > max_length) {
-        //remove the first one
-        points.shift();
+        //if the next point is false, the attractor has expireds
+        if (!nextPoint) { expire = true; }
     }
 
-    //plot it!
-    points.forEach(function(point, i){
-        stroke(255);
-        translate(point.x, point.y, point.z);
-        sphere(1);
-        translate(-point.x, -point.y, -point.z);
-        if (i + 1 < points.length) {
-            mx = (points[i + 1].x - point.x) / 10;
-            my = (points[i + 1].y - point.y) / 10;
-            mz = (points[i + 1].z - point.z) / 10;
-            point.x += mx;
-            point.y += my;
-            point.z += mz;
-        }
-        //fun bit - make each point move a bit towards the next point
-    });
-}
+    //updating the array
+    if (expire) {
+        //slowly collapse the array
+        points.shift();
+        points.pop();
+    } else {
+        //add the point to the array
+        points.push({x: (nextPoint.x * zoom), y: (nextPoint.y * zoom), z: (nextPoint.z * zoom)});
 
+        if (points.length > max_length) {
+            //remove the first one & shift their indexes (like snake)
+            points.shift();
+        }
+    }
+
+    //draw!!
+    if (points.length == 0){
+        //the array must have collapsed
+        expire = false;
+        attractor.reset();
+    } else {
+        //plot it!
+        points.forEach(function(point, i){
+            stroke(255);
+            //move to the point
+            translate(point.x, point.y, point.z);
+            //draw it
+            sphere(1);
+            //move back
+            translate(-point.x, -point.y, -point.z);
+
+            //move points towards the one further on - this makes them process!
+            if (i + 1 < points.length) {
+                mx = (points[i + 1].x - point.x) / 10;
+                my = (points[i + 1].y - point.y) / 10;
+                mz = (points[i + 1].z - point.z) / 10;
+                point.x += mx;
+                point.y += my;
+                point.z += mz;
+            }
+        });
+    }
+}

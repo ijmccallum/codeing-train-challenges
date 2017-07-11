@@ -1,11 +1,13 @@
 
 
 //pick a random attractor!
-//var attractor = Lorenz;
+//  var attractor = Lorenz;
 //var attractor = Aizawa;
 //var attractor = Halvorsen;
 //var attractor = Sakarya;
-var attractor = GenesioTesi;
+//var attractor = GenesioTesi;
+//var attractor = WimolBanlue;
+var attractor = TSUCS1;
 
 //each attractor sets it's own defaults
 var zoom = attractor.zoom;
